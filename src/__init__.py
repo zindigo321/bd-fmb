@@ -1,0 +1,1 @@
+"""Minimal constellation smoke implementation."""

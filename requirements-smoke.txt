@@ -1,0 +1,5 @@
+# Versions actually installed and exercised in conda fmb for round 1.
+# The pure constellation generator uses only the Python standard library.
+pywin32==312
+shapely==2.2.0
+matplotlib==3.11.2

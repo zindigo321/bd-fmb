@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+/work/
+/data/
+/results/
+/stk/
+.pytest_cache/
