@@ -63,7 +63,7 @@ class Round4Tests(unittest.TestCase):
     def test_h_layers_separate_goals_and_states(self):
         def check(records,geom=True,complete=True):
             s=aggregate(['a','b','unvisited'],records,[0,10]);h=manual_audit(['a','b','unvisited'],records,s,[0,10])
-            return evaluate(records,s,h,[dict(status='PASS' if geom else 'FAIL')] if records else [],completed=complete)
+            return evaluate(records,s,h,[dict(record_id=r['record_id'],status='PASS' if geom else 'FAIL') for r in records],completed=complete)
         def r(id,p,s,a,b):return dict(record_id=id,point_id=p,sat_id=s,sensor_id='Camera',start_epsec=a,stop_epsec=b)
         first=[r('1','a','s1',1,2)]
         x=check(first);self.assertEqual([x[k]['status'] for k in ['H1','H2','H3']],['PASS','BLOCKED','BLOCKED'])

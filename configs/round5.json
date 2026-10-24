@@ -1,0 +1,171 @@
+{
+  "schema_version": 2,
+  "assumptions_version": "engineering-2026-10-round5-frozen-48h",
+  "assumptions": [
+    "UTCG is provisional",
+    "Earth constants are engineering assumptions, not organizer confirmed",
+    "FOV numbers interpreted as half angles provisionally",
+    "ECI velocity means inertial velocity, not Earth-fixed ground track",
+    "Diagnostic points are not official regional evaluation points"
+  ],
+  "constellation": {
+    "n": 28,
+    "planes": 7,
+    "phase_factor": 1,
+    "h_km": 600.0,
+    "raan0_deg": 0.0,
+    "u0_deg": 0.0
+  },
+  "earth": {
+    "mean_radius_km": 6371.0088,
+    "j2_reference_radius_km": 6378.137,
+    "mu_km3_s2": 398600.4418,
+    "j2": 0.00108262668,
+    "tropical_year_days": 365.2421897,
+    "ellipsoid_a_km": 6378.137,
+    "ellipsoid_b_km": 6356.75231424
+  },
+  "epoch_utcg": "1 Jan 2027 00:00:00.000",
+  "time_system": "UTCG",
+  "reference_frame": "J2000",
+  "duration_s": 172800.0,
+  "propagation_step_s": 30.0,
+  "report_sample_step_s": 30.0,
+  "diagnostic_time_s": 600.0,
+  "diagnostic_half_window_s": 0.05,
+  "diagnostic_surface": {
+    "model": "WGS84 ellipsoid",
+    "altitude_km": 0.0,
+    "use_terrain": false
+  },
+  "camera": {
+    "along_half_deg": 0.001622,
+    "cross_half_deg": 0.81,
+    "attitude_profile": "NadirECIVel",
+    "constraint_offset_deg": 0.0,
+    "mount_quaternion_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  "access_tiers": [
+    {
+      "name": "coarse",
+      "max_step_s": 0.01,
+      "min_step_s": 0.001,
+      "time_convergence_s": 0.0001
+    },
+    {
+      "name": "medium",
+      "max_step_s": 0.005,
+      "min_step_s": 0.001,
+      "time_convergence_s": 1e-06
+    },
+    {
+      "name": "fine",
+      "max_step_s": 0.001,
+      "min_step_s": 0.001,
+      "time_convergence_s": 1e-08
+    }
+  ],
+  "tolerances": {
+    "position_km": 1e-06,
+    "orthogonal": 1e-10,
+    "axis_vector": 1e-06,
+    "angle_deg": 1e-05,
+    "convergence_s": 2e-05,
+    "independent_event_s": 0.0002,
+    "sso_rad_s": 1e-15
+  },
+  "stk": {
+    "progid": "STK11.Application",
+    "executable": "G:\\bin\\AgUiApplication.exe",
+    "timeout_s": 180
+  },
+  "input_boundary": "data/raw/yangtze_delta/Description of the Boundaries of the Yangtze River Delta Region/yangtze_river_delta_boundary.geojson",
+  "round3": {
+    "task_timeout_s": 120,
+    "stage_budget_s": {
+      "A": 600,
+      "B": 600,
+      "C": 600
+    },
+    "grid": {
+      "anchor_lon": 0,
+      "anchor_lat": 0,
+      "spacing_deg": 0.1,
+      "count": 16,
+      "first_duration_s": 6000,
+      "zero_event_second_duration_s": 12000,
+      "merge_tolerance_s": 0
+    },
+    "search": {
+      "coarse_steps_s": [
+        5.0,
+        2.0,
+        1.0
+      ],
+      "candidate_half_window_s": 0.05,
+      "padding_s": 0.1,
+      "root_tolerance_s": 1e-07,
+      "max_step_s": 0.001,
+      "min_step_s": 0.001,
+      "time_convergence_s": 1e-08,
+      "coarse_earth_rotation_rad_s": 7.292115e-05,
+      "coarse_axis_tolerance": 1e-05
+    },
+    "match_tolerance_s": 0.0002,
+    "reopen_tolerance_s": 2e-05
+  },
+  "round4": {
+    "source_round3": "G:\\gpt-file\\Codex\\outputs\\bd-fmb\\round3_20261023T180751_7f077d4f",
+    "source_run_id": "20261023T100752_afd7283a20",
+    "coarse_step_s": 5.0,
+    "horizon_guard_deg": 5.0,
+    "stage_budget_s": 2400,
+    "lifecycle_budget_s": 240,
+    "regression_budget_s": 420,
+    "reopen_timeout_s": 300,
+    "tiers": [
+      {
+        "id": "T5",
+        "planes": 7,
+        "duration_s": 172800.0,
+        "timeout_s": 1200
+      }
+    ]
+  },
+  "round5": {
+    "source_round4": "G:\\gpt-file\\Codex\\outputs\\bd-fmb\\round4\\20261023T192721_bb112ff4",
+    "source_round4_run_id": "20261023T112721_dd0e9e7bda",
+    "window": [
+      0.0,
+      172800.0
+    ],
+    "satellites": [
+      "Sat001",
+      "Sat005",
+      "Sat009",
+      "Sat013",
+      "Sat017",
+      "Sat021",
+      "Sat025"
+    ],
+    "main_timeout_s": 1200,
+    "regression_timeout_s": 420,
+    "lifecycle_budget_s": 240,
+    "reopen_timeout_s": 300,
+    "total_stk_budget_s": 2400,
+    "cleanup_reserve_s": 90,
+    "chunking": false,
+    "early_stop": false,
+    "budget": {
+      "formula": "1.5 * (48.376 + 2*256.024 + 2*0.797 + (319.672-48.376-256.024-0.797) + 60)",
+      "estimated_s": 954.7395000000001,
+      "assumptions": "Screening scales with duration; setup fixed; twice observed refinement plus 60 seconds growth allowance; 1.5 safety factor. Estimate only.",
+      "decision": "Use 1200 seconds; no physical change or runtime budget extension"
+    }
+  }
+}

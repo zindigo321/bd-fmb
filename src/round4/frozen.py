@@ -16,7 +16,8 @@ def bind(ctx,cfg):
     with (source/'fixed_grid.csv').open(encoding='utf-8',newline='') as f:csvpoints=list(csv.DictReader(f))
     if len(points)!=16 or len(csvpoints)!=16:raise ValueError('Frozen count mismatch')
     for p,c in zip(points,csvpoints):
-        if p['point_id']!=c['point_id'] or any(p[k]!=float(c[k]) for k in ['latitude_deg','longitude_deg','altitude_km']):raise ValueError('Frozen CSV differs')
+        if (p['point_id']!=c['point_id'] or any(p[k]!=float(c[k]) for k in ['latitude_deg','longitude_deg','altitude_km'])
+            or p['use_terrain'] != (c['use_terrain']=='True') or p['use_terrain'] or p['altitude_km']!=0):raise ValueError('Frozen CSV/surface differs')
     with (source/'full_grid.csv').open(encoding='utf-8',newline='') as f:full=list(csv.DictReader(f))
     typed=[dict(point_id=x['point_id'],latitude_deg=float(x['latitude_deg']),longitude_deg=float(x['longitude_deg']),altitude_km=float(x['altitude_km']),use_terrain=x['use_terrain']=='True',component=int(x['component'])) for x in full]
     if len(full)!=3264 or digest(canonical(typed))!=old['full_grid_sha256']:raise ValueError('Full grid source hash mismatch')

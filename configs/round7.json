@@ -1,0 +1,308 @@
+{
+  "schema_version": 2,
+  "assumptions_version": "engineering-2026-10-round6-frozen-7d",
+  "assumptions": [
+    "UTCG is provisional",
+    "Earth constants are engineering assumptions, not organizer confirmed",
+    "FOV numbers interpreted as half angles provisionally",
+    "ECI velocity means inertial velocity, not Earth-fixed ground track",
+    "Diagnostic points are not official regional evaluation points"
+  ],
+  "constellation": {
+    "n": 28,
+    "planes": 7,
+    "phase_factor": 1,
+    "h_km": 600.0,
+    "raan0_deg": 0.0,
+    "u0_deg": 0.0
+  },
+  "earth": {
+    "mean_radius_km": 6371.0088,
+    "j2_reference_radius_km": 6378.137,
+    "mu_km3_s2": 398600.4418,
+    "j2": 0.00108262668,
+    "tropical_year_days": 365.2421897,
+    "ellipsoid_a_km": 6378.137,
+    "ellipsoid_b_km": 6356.75231424
+  },
+  "epoch_utcg": "1 Jan 2027 00:00:00.000",
+  "time_system": "UTCG",
+  "reference_frame": "J2000",
+  "duration_s": 604800.0,
+  "propagation_step_s": 30.0,
+  "report_sample_step_s": 30.0,
+  "diagnostic_time_s": 600.0,
+  "diagnostic_half_window_s": 0.05,
+  "diagnostic_surface": {
+    "model": "WGS84 ellipsoid",
+    "altitude_km": 0.0,
+    "use_terrain": false
+  },
+  "camera": {
+    "along_half_deg": 0.001622,
+    "cross_half_deg": 0.81,
+    "attitude_profile": "NadirECIVel",
+    "constraint_offset_deg": 0.0,
+    "mount_quaternion_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  "access_tiers": [
+    {
+      "name": "coarse",
+      "max_step_s": 0.01,
+      "min_step_s": 0.001,
+      "time_convergence_s": 0.0001
+    },
+    {
+      "name": "medium",
+      "max_step_s": 0.005,
+      "min_step_s": 0.001,
+      "time_convergence_s": 1e-06
+    },
+    {
+      "name": "fine",
+      "max_step_s": 0.001,
+      "min_step_s": 0.001,
+      "time_convergence_s": 1e-08
+    }
+  ],
+  "tolerances": {
+    "position_km": 1e-06,
+    "orthogonal": 1e-10,
+    "axis_vector": 1e-06,
+    "angle_deg": 1e-05,
+    "convergence_s": 2e-05,
+    "independent_event_s": 0.0002,
+    "sso_rad_s": 1e-15
+  },
+  "stk": {
+    "progid": "STK11.Application",
+    "executable": "G:\\bin\\AgUiApplication.exe",
+    "timeout_s": 180
+  },
+  "input_boundary": "data/raw/yangtze_delta/Description of the Boundaries of the Yangtze River Delta Region/yangtze_river_delta_boundary.geojson",
+  "round3": {
+    "task_timeout_s": 120,
+    "stage_budget_s": {
+      "A": 600,
+      "B": 600,
+      "C": 600
+    },
+    "grid": {
+      "anchor_lon": 0,
+      "anchor_lat": 0,
+      "spacing_deg": 0.1,
+      "count": 16,
+      "first_duration_s": 6000,
+      "zero_event_second_duration_s": 12000,
+      "merge_tolerance_s": 0
+    },
+    "search": {
+      "coarse_steps_s": [
+        5.0,
+        2.0,
+        1.0
+      ],
+      "candidate_half_window_s": 0.05,
+      "padding_s": 0.1,
+      "root_tolerance_s": 1e-07,
+      "max_step_s": 0.001,
+      "min_step_s": 0.001,
+      "time_convergence_s": 1e-08,
+      "coarse_earth_rotation_rad_s": 7.292115e-05,
+      "coarse_axis_tolerance": 1e-05
+    },
+    "match_tolerance_s": 0.0002,
+    "reopen_tolerance_s": 2e-05
+  },
+  "round4": {
+    "source_round3": "G:\\gpt-file\\Codex\\outputs\\bd-fmb\\round3_20261023T180751_7f077d4f",
+    "source_run_id": "20261023T100752_afd7283a20",
+    "coarse_step_s": 5.0,
+    "horizon_guard_deg": 5.0,
+    "stage_budget_s": 4572.802128100011,
+    "lifecycle_budget_s": 240,
+    "regression_budget_s": 420,
+    "reopen_timeout_s": 600,
+    "tiers": [
+      {
+        "id": "T7",
+        "planes": 7,
+        "duration_s": 604800.0,
+        "timeout_s": 10800
+      }
+    ]
+  },
+  "round6": {
+    "window": [
+      0.0,
+      604800.0
+    ],
+    "satellites": [
+      "Sat001",
+      "Sat005",
+      "Sat009",
+      "Sat013",
+      "Sat017",
+      "Sat021",
+      "Sat025"
+    ],
+    "main_timeout_s": 3000,
+    "regression_timeout_s": 420,
+    "lifecycle_budget_s": 240,
+    "reopen_timeout_s": 600,
+    "total_stk_budget_s": 4572.802128100011,
+    "cleanup_reserve_s": 180,
+    "chunking": false,
+    "early_stop": false,
+    "budget": {
+      "screening_estimate_s": 1684.4485,
+      "estimated_s": 2167.098,
+      "formula": "541.748*3.5 + (812.728-541.748)",
+      "decision": "3000 s main, 420 s diagnostics, 240 s lifecycle, 600 s reopen, 180 s cleanup; 4800 s total; no runtime extension",
+      "retry_decision": "One bounded correction after actual STK11 cadence mismatch; explicit TimeArray requests, no tolerance/physics change. Prior real-STK time deducted from 4800 s cumulative allowance."
+    },
+    "source_round5": "G:\\gpt-file\\Codex\\outputs\\bd-fmb\\round5\\20261024T093121_c8e60dfd",
+    "source_round5_run_id": "20261024T013122_3c8c213643",
+    "phase_s": 0.0,
+    "trajectory_time_tolerance_s": 1e-08,
+    "prior_attempt_stk_elapsed_s": 227.19787189998897
+  },
+  "round7": {
+    "satellites": [
+      "Sat001",
+      "Sat002",
+      "Sat003",
+      "Sat004",
+      "Sat005",
+      "Sat006",
+      "Sat007",
+      "Sat008",
+      "Sat009",
+      "Sat010",
+      "Sat011",
+      "Sat012",
+      "Sat013",
+      "Sat014",
+      "Sat015",
+      "Sat016",
+      "Sat017",
+      "Sat018",
+      "Sat019",
+      "Sat020",
+      "Sat021",
+      "Sat022",
+      "Sat023",
+      "Sat024",
+      "Sat025",
+      "Sat026",
+      "Sat027",
+      "Sat028"
+    ],
+    "original_seven": [
+      "Sat001",
+      "Sat005",
+      "Sat009",
+      "Sat013",
+      "Sat017",
+      "Sat021",
+      "Sat025"
+    ],
+    "window": [
+      0,
+      604800
+    ],
+    "phase_s": 0.0,
+    "early_stop": false,
+    "chunking": false,
+    "candidate_guard_km": 0.05,
+    "source_round6": "G:\\gpt-file\\Codex\\outputs\\bd-fmb\\round6\\20261024T130849_d7b2748c",
+    "source_round6_run_id": "20261024T050849_ceef1e9d93",
+    "budget_caps_s": {
+      "reliability_and_cold": 1200,
+      "B1": 600,
+      "B2": 1500,
+      "main": 10800,
+      "reopen": 1200,
+      "lifecycle": 240,
+      "cleanup_reserve": 300,
+      "cumulative": 18000
+    },
+    "benchmarks": {
+      "B1": {
+        "satellites": [
+          "Sat001",
+          "Sat005",
+          "Sat009",
+          "Sat013",
+          "Sat017",
+          "Sat021",
+          "Sat025"
+        ],
+        "window": [
+          0,
+          86400
+        ]
+      },
+      "B2": {
+        "satellites": [
+          "Sat001",
+          "Sat002",
+          "Sat003",
+          "Sat004",
+          "Sat005",
+          "Sat006",
+          "Sat007",
+          "Sat008",
+          "Sat009",
+          "Sat010",
+          "Sat011",
+          "Sat012",
+          "Sat013",
+          "Sat014",
+          "Sat015",
+          "Sat016",
+          "Sat017",
+          "Sat018",
+          "Sat019",
+          "Sat020",
+          "Sat021",
+          "Sat022",
+          "Sat023",
+          "Sat024",
+          "Sat025",
+          "Sat026",
+          "Sat027",
+          "Sat028"
+        ],
+        "window": [
+          0,
+          86400
+        ]
+      }
+    },
+    "cold_pair": {
+      "satellites": [
+        "Sat021"
+      ],
+      "window": [
+        53500,
+        53650
+      ],
+      "point_count": 16,
+      "order": [
+        "old",
+        "new"
+      ],
+      "cache": "new model and independent STK instance each; no persisted-state reuse"
+    },
+    "reopen_negative_window": [
+      0.0,
+      0.1
+    ]
+  }
+}

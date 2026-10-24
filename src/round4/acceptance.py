@@ -52,7 +52,12 @@ def manual_audit(point_ids, raw, stats, window):
 def evaluate(raw,stats,handcheck,geometry,consistency=True,completed=True):
     contributions={s:sum(r['sat_id']==s for r in raw) for s in sorted({r['sat_id'] for r in raw})}
     valid=handcheck['status']=='PASS' and consistency
-    geometry_ok=bool(geometry) and all(x['status']=='PASS' for x in geometry)
+    record_ids=[r.get('record_id') for r in raw]
+    geometry_ids=[g.get('record_id') for g in geometry]
+    geometry_ok=(len(record_ids)==len(set(record_ids)) and all(isinstance(x,str) for x in record_ids+geometry_ids)
+        and sorted(record_ids)==sorted(geometry_ids) and all(x['status']=='PASS' for x in geometry))
+    # Every layer depends on all event checks, not just H1 or an arbitrary PASS.
+    valid = valid and geometry_ok
     def layer(name,goal,reason,validation=True):
         if not completed:status='SKIPPED';code='UPSTREAM_NOT_COMPLETED'
         elif not valid or not validation:status='FAIL';code='VALIDATION_FAILED'
@@ -60,7 +65,7 @@ def evaluate(raw,stats,handcheck,geometry,consistency=True,completed=True):
         else:status='BLOCKED';code=reason
         return dict(id=name,status=status,required=True,reason_code=code,
                     reason={'H1':'真实固定网格正事件链路','H2':'同窗口真实多星输入汇总','H3':'真实内部空窗重访统计'}[name]+': '+code)
-    return dict(H1=layer('H1',bool(raw),'NO_REAL_FIXED_GRID_EVENTS',geometry_ok if raw else True),
+    return dict(H1=layer('H1',bool(raw),'NO_REAL_FIXED_GRID_EVENTS'),
         H2=layer('H2',len(contributions)>=2,'FEWER_THAN_TWO_CONTRIBUTING_SATELLITES'),
         H3=layer('H3',stats['effective_gap_count']>0,'NO_OBSERVED_REAL_INTERNAL_GAPS'),
         contributing_satellites=contributions,

@@ -107,7 +107,11 @@ def _worker(conn, ctx, cfg, task, payload, stdout_path, stderr_path):
             detail['scenario_created'] = True
         else:
             # All experiment-local COM references die on return, before Quit.
-            if task.startswith('r4_'):
+            if task.startswith('r7_'):
+                from src.round7.experiments import dispatch
+            elif task.startswith('r6_'):
+                from src.round6.experiments import dispatch
+            elif task.startswith('r4_'):
                 from src.round4.experiments import dispatch
             else:
                 from .experiments import dispatch

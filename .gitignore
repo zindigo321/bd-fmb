@@ -5,3 +5,4 @@ __pycache__/
 /results/
 /stk/
 .pytest_cache/
+/_local/
